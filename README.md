@@ -31,16 +31,25 @@ A modular, scalable GraphQL API built with **Apollo Server**, **Prisma ORM**, an
 
 ## Folder Structure
 
+```
 src/
-├── api/ # Modular APIs (course, instructor, user, auth)
-│ ├── course/ # Course GraphQL schema, resolvers, permissions
-│ ├── instructor/ # Instructor schema, services
-│ └── ...
-├── utils/ # JWT utils, validation rules, graphql-shield
-├── dataloaders/ # Batch loaders to solve N+1
-├── services/ # Prisma service layers
-├── server.js # Main Apollo server setup
-└── api/index.js # ApiExplorer for schema aggregation
+├── api/                     # GraphQL modules (schema, resolvers, permissions)
+│   ├── auth/                # Login, signup, update profile
+│   ├── course/              # Course typeDefs, resolvers, permissions
+│   ├── instructor/          # Instructor-related API logic
+│   └── user/                # User management
+├── dataloaders/            # Handles N+1 batching (e.g., UserDataLoader)
+├── services/               # Prisma-based service layer
+├── utils/                  # JWT, validation, GraphQL Shield rules
+│   ├── jwt.js              # Token generation & verification
+│   ├── shield.js           # Role-based access control
+│   └── validation.js
+├── api/index.js            # ApiExplorer (schema + resolver aggregator)
+├── server.js               # Apollo Server + Express + Context setup
+└── prisma/
+    ├── schema.prisma       # Prisma DB schema
+    └── migrations/         # Auto-generated migration files
+```
 
 ---
 
@@ -51,13 +60,30 @@ src/
 ```bash
 git clone https://github.com/<your-username>/coursehub-graphql-api.git
 cd coursehub-graphql-api
+```
 
+### 2. Install dependencies
+
+```bash
 npm install
+```
 
+### 3. Set up environment variables
+
+```bash
 DATABASE_URL=postgresql://user:password@localhost:5432/coursehub
 JWT_SECRET=your_jwt_secret
+```
 
+### 4. Generate Prisma Client & Migrate
+
+```bash
 npx prisma generate
 npx prisma migrate dev --name init
+```
 
+### 5. Start the server
+   
+```bash
 npm run dev
+```
