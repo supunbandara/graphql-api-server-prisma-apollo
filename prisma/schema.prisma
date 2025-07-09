@@ -1,0 +1,62 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  fullName  String
+  email     String   @unique
+  password  String?
+  role      String
+
+  instructors Instructor[] @relation("CreatedInstructors")
+  courses     Course[]     @relation("CreatedCourses")
+
+  @@map("users")
+}
+
+model Instructor {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  fullName   String
+  bio        String?
+  expertise  String?
+  nationality String?
+
+  creatorId  Int
+  creator    User      @relation("CreatedInstructors", fields: [creatorId], references: [id])
+
+  courses    Course[]  @relation("CourseInstructors")
+
+  @@map("instructors")
+}
+
+model Course {
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  title        String
+  description  String?
+  language     String?
+  category     String?
+  duration     Int?
+  level        String?
+  publishedDate DateTime?
+
+  creatorId    Int
+  creator      User        @relation("CreatedCourses", fields: [creatorId], references: [id])
+
+  instructors  Instructor[] @relation("CourseInstructors")
+
+  @@map("courses")
+}

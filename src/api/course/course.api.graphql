@@ -1,0 +1,39 @@
+extend type Query {
+
+  courseById(id: ID!): Course
+
+  coursesByInstructor(instructorId: Int): [Course!]!
+
+  courses(first: Int, offset: Int): [Course!]!
+}
+
+extend type Mutation {
+
+  createCourse(editCourseReq: EditCourseReq!): Course!
+
+  editCourse(id: ID!, editCourseReq: EditCourseReq!): Course
+
+  deleteCourse(id: ID!): Course
+}
+
+type Course {
+  id: ID!
+  creator: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  instructors: [Instructor!]!
+  title: String!
+  description: String
+  language: String
+  category: String
+  level: String
+}
+
+input EditCourseReq {
+  instructorIds: [ID!]!
+  title: String!
+  description: String
+  language: String
+  category: String
+  level: String
+}
