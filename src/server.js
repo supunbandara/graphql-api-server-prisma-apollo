@@ -22,6 +22,7 @@ async function startServer() {
 
     const apolloServer = new ApolloServer({
       schema,
+      introspection: false,
       formatError: (error) => {
         logger.error(error);
         return error;
