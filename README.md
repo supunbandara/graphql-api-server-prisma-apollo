@@ -1,4 +1,4 @@
-# CourseHub GraphQL API
+# GraphQL API Server - Prisma - Apollo
 
 A modular, scalable GraphQL API built with **Apollo Server**, **Prisma ORM**, and **PostgreSQL**. This project follows the **schema-first approach** with best practices for **authentication**, **authorization**, **validation**, and handling **N+1 queries** via **DataLoader**.
 
